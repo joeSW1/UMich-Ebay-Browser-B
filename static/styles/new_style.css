@@ -1,0 +1,26 @@
+body {
+  padding: 1px;
+}
+h1 {
+  padding-top: 0px;
+}
+
+table,
+th,
+td {
+  border: 1px solid black;
+  padding: 5px;
+}
+
+ol {
+  margin: 0px;
+}
+
+img {
+  width: 210px;
+}
+
+thead {
+  text-align: center;
+  font-weight: bold;
+}

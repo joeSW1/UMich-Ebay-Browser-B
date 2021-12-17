@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Latest compiled and minified CSS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{{ url_for('static',filename='styles/new_style.css') }}">
+
+    <style>
+        body {
+          background-color: white;
+          color: #1a1a1a;
+        }
+
+        table, th, td {
+            border: 1px solid black;
+        }
+
+        .dark-mode {
+          background-color: #1a1a1a;
+          color: white;
+        }
+
+        .dark-mode table, .dark-mode th, .dark-mode td {
+            border: 1px solid white;
+        }
+    </style>
+    <title>Ebay Umich Browser</title>
+</head>
+<body>
+    <h1>Ebay UMich Browser</h1>
+    <div>
+        <input onclick="darkMode()" type="button" class="btn btn-primary" value="Dark Mode" ></input>
+      </div>
+    <h3>Search parameters</h3>
+    <form action="{{ url_for('handle_data') }}" method="post" enctype="multipart/form-data">
+        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+            <label>Pick your item category:</label>
+            <br>
+            <label class="btn btn-primary active">
+            <input type="radio" name="category" id="option1" autocomplete="off" value="hat" checked> Hat
+            </label>
+            <label class="btn btn-primary">
+            <input type="radio" name="category" id="option2" autocomplete="off" value="t+shirt"> T-Shirt
+            </label>
+            <label class="btn btn-primary">
+            <input type="radio" name="category" id="option3" autocomplete="off" value="mug"> Mug
+            </label>
+            <label class="btn btn-primary">
+                <input type="radio" name="category" id="option4" autocomplete="off" value="sweatshirt"> Sweatshirt
+            </label>
+            <label class="btn btn-primary">
+                <input type="radio" name="category" id="option5" autocomplete="off" value="pennant"> Pennant
+            </label>
+            <label class="btn btn-primary">
+                <input type="radio" name="category" id="option6" autocomplete="off" value="pin"> Pin
+            </label>
+        </div>
+        <br>
+        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+            <label>New or Pre-Owned:</label>
+            <br>
+            <label class="btn btn-primary active">
+            <input type="radio" name="condition" id="option1" autocomplete="off" value="pre_owned" checked> Pre-Owned
+            </label>
+            <label class="btn btn-primary">
+            <input type="radio" name="condition" id="option2" autocomplete="off" value="new"> New
+            </label>
+        </div>
+        <br>
+        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+            <label>From a Top-Rated Seller or Not:</label>
+            <br>
+            <label class="btn btn-primary active">
+            <input type="radio" name="reputation" id="option1" autocomplete="off" value="top_rated" checked> Top-Rated
+            </label>
+            <label class="btn btn-primary">
+            <input type="radio" name="reputation" id="option2" autocomplete="off" value="not_top_rated"> Not Top-Rated
+            </label>
+        </div>
+        <br>
+        <div>
+            <label>Update Table:</label>
+            <br>
+            <input class="btn btn-warning" value="Update" type="submit"></input>
+        </div>
+      </form>
+
+      <br>
+      <div>
+
+        <h2>Selection: {{category}}, {{condition}}, {{reputation}}</h2>
+        <table class="sortable">
+            <tr>
+                <td>Row</td>
+                <td>Image</td>
+                <td>Listing</td>
+                <td>Price</td>
+                <td>Hotness</td>
+            </tr>
+            {% for item in input_data %}
+            <tr >
+                <td>{{loop.index0 + 1}}</td>
+                <td><img src="{{item['image']}}" /></td>
+                <td><a href="{{item['link']}}">{{item['name']}}</a></td>
+                <td class="price">${{item['price']}}</td>
+                <td>{{item['hotness']}} </td>
+            </tr>
+            {% endfor %}
+        </table>
+      </div>
+      <script>
+        function darkMode() {
+          var element = document.body;
+          element.classList.toggle("dark-mode");
+        }
+      </script>
+      <script src="{{ url_for('static',filename='sorttable.js') }}"></script>
+      <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+</html>
